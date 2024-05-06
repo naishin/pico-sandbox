@@ -67,6 +67,12 @@ int main() {
 
     command[0] = 0x2c;
 
+    dma_channel_configure(dma_tx, &c,
+                          &spi_get_hw(spi_default)->dr, // write address
+                          fbdata,                       // read address
+                          FB_SIZE,                      // element count (each element is of size transfer_data_size)
+                          false);                       // don't start yet
+
     while(true) {
         gpio_put(LED, 1);
         fill(fbdata, 0xFC, 0x00, 0x00);
@@ -75,13 +81,7 @@ int main() {
         gpio_put(CMD_DATA, 0);
         spi_write_blocking(spi_default, command, 1);
         gpio_put(CMD_DATA, 1);
-        //spi_write_blocking(spi_default, fbdata, FB_SIZE);
-        dma_channel_configure(dma_tx, &c,
-                            &spi_get_hw(spi_default)->dr, // write address
-                            fbdata, // read address
-                            FB_SIZE, // element count (each element is of size transfer_data_size)
-                            false); // don't start yet
-        dma_channel_start(dma_tx);
+        dma_channel_transfer_from_buffer_now(dma_tx, fbdata, FB_SIZE);
         sleep_ms(1*1000);
 
         gpio_put(LED, 1);
@@ -91,13 +91,7 @@ int main() {
         gpio_put(CMD_DATA, 0);
         spi_write_blocking(spi_default, command, 1);
         gpio_put(CMD_DATA, 1);
-        //spi_write_blocking(spi_default, fbdata, FB_SIZE);
-        dma_channel_configure(dma_tx, &c,
-                              &spi_get_hw(spi_default)->dr, // write address
-                              fbdata,                       // read address
-                              FB_SIZE, // element count (each element is of size transfer_data_size)
-                              false);  // don't start yet
-        dma_channel_start(dma_tx);
+        dma_channel_transfer_from_buffer_now(dma_tx, fbdata, FB_SIZE);
         sleep_ms(1*1000);
 
         gpio_put(LED, 1);
@@ -107,13 +101,7 @@ int main() {
         gpio_put(CMD_DATA, 0);
         spi_write_blocking(spi_default, command, 1);
         gpio_put(CMD_DATA, 1);
-        //spi_write_blocking(spi_default, fbdata, FB_SIZE);
-        dma_channel_configure(dma_tx, &c,
-                        &spi_get_hw(spi_default)->dr, // write address
-                        fbdata,                       // read address
-                        FB_SIZE, // element count (each element is of size transfer_data_size)
-                        false);  // don't start yet
-        dma_channel_start(dma_tx);
+        dma_channel_transfer_from_buffer_now(dma_tx, fbdata, FB_SIZE);
         sleep_ms(1*1000);
     }
 }
