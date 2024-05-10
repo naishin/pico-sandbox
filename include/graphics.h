@@ -6,9 +6,8 @@
 
 extern const size_t FB_SIZE;
 
-extern uint8_t font[];
-
 void fill(uint8_t* data, uint8_t red, uint8_t green, uint8_t blue);
 void drawA(uint8_t* data);
+uint8_t* renderChar(uint8_t);
 
 #endif

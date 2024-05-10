@@ -36,7 +36,7 @@ add_executable(project1
 target_include_directories(project1 PRIVATE include)
 
 # pull in common dependencies
-target_link_libraries(project1 pico_stdlib hardware_spi hardware_dma)
+target_link_libraries(project1 pico_stdlib hardware_spi hardware_dma hardware_adc)
 
 # create map/bin/hex file etc.
 pico_add_extra_outputs(project1)
