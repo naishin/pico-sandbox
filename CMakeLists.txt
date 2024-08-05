@@ -40,3 +40,19 @@ target_link_libraries(project1 pico_stdlib hardware_spi hardware_dma hardware_ad
 
 # create map/bin/hex file etc.
 pico_add_extra_outputs(project1)
+
+#add_subdirectory(spi_slave)
+
+add_executable(echo
+        src/comm.c
+        src/echo_main.c
+        include/comm.h
+        )
+
+target_include_directories(echo PRIVATE include)
+
+# pull in common dependencies
+target_link_libraries(echo pico_stdlib hardware_spi)
+
+# create map/bin/hex file etc.
+pico_add_extra_outputs(echo)
